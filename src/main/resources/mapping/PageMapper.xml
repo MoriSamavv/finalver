@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sys.comic.dao.PageMapper" >
+
+    <resultMap id="BaseResultMap" type="com.sys.comic.entity.Page" >
+        <id column="pid" property="pid" jdbcType="INTEGER" />
+        <result column="chapterId" property="chapterId" jdbcType="INTEGER" />
+        <result column="pageurl" property="pageurl" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.sys.comic.entity.Page" >
+        <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into page (chapterId, pageurl)
+        values (#{chapterId},#{pageurl});
+    </insert>
+
+    <select id="selectByChapterId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select * from page where chapterId=#{chapterId} order by `pageurl` desc;
+    </select>
+
+</mapper>

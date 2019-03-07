@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sys.comic.dao.StarMapper" >
+
+    <resultMap id="BaseResultMap" type="com.sys.comic.entity.Star" >
+        <id column="uid" property="uid" jdbcType="INTEGER" />
+        <id column="cid" property="cid" jdbcType="INTEGER" />
+        <result column="like" property="like" jdbcType="TINYINT" />
+        <result column="chapterId" property="chapterId" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <select id="selectByUid" resultMap="BaseResultMap" >
+        select * from star where uid=#{uid} and `like`=1;
+    </select>
+
+    <select id="get" resultMap="BaseResultMap" >
+        select * from star where uid=#{uid} and cid=#{cid};
+    </select>
+
+    <insert id="insert" parameterType="com.sys.comic.entity.Star" >
+        insert into star (uid, cid, `like`, chapterId)
+        values (#{uid},#{cid},#{like},#{chapterId});
+    </insert>
+
+    <update id="updateLike" >
+        update star
+        set `like` = #{like}
+        where `uid`=#{uid} and `cid` = #{cid};
+    </update>
+
+    <update id="updateChapterId" >
+        update star
+        set `chapterId` = #{chapterId}
+        where `uid`=#{uid} and `cid` = #{cid};
+    </update>
+</mapper>

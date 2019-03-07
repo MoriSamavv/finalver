@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sys.comic.dao.ComicMapper" >
+
+    <resultMap id="BaseResultMap" type="com.sys.comic.entity.Comic" >
+        <id column="cid" property="cid" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="author" property="author" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="latest" property="latest" jdbcType="INTEGER" />
+        <result column="posttime" property="posttime" jdbcType="DATE" />
+        <result column="outsideurl" property="outsideurl" jdbcType="VARCHAR" />
+        <result column="insideurl" property="insideurl" jdbcType="VARCHAR" />
+        <result column="del" property="del" jdbcType="TINYINT" />
+    </resultMap>
+
+    <select id="selectAll" resultMap="BaseResultMap" >
+        select * from comic where del=0 order by posttime;
+    </select>
+
+
+    <insert id="insert" parameterType="com.sys.comic.entity.Comic" >
+        <selectKey resultType="java.lang.Integer" keyProperty="cid" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into comic (title, author, description, posttime)
+        values (#{title},#{author},#{description},#{posttime});
+    </insert>
+
+    <update id="delByCid" parameterType="java.lang.Long" >
+        update comic
+        set del = 1
+        where `cid` = #{cid};
+    </update>
+
+    <update id="updateLatest" >
+        update comic
+        set latest = #{latest}
+        where `cid` = #{cid};
+    </update>
+
+    <update id="updateOutsideurl" >
+        update comic
+        set outsideurl = #{outsideurl}
+        where `cid` = #{cid};
+    </update>
+
+    <update id="updateInsideurl" >
+        update comic
+        set insideurl = #{insideurl}
+        where `cid` = #{cid};
+    </update>
+
+    <select id="getByCid" resultMap="BaseResultMap" >
+        select * from comic where cid=#{cid};
+    </select>
+</mapper>
