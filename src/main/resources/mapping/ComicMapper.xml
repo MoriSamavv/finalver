@@ -18,7 +18,6 @@
         select * from comic where del=0 order by posttime;
     </select>
 
-
     <insert id="insert" parameterType="com.sys.comic.entity.Comic" >
         <selectKey resultType="java.lang.Integer" keyProperty="cid" order="AFTER" >
             SELECT LAST_INSERT_ID()

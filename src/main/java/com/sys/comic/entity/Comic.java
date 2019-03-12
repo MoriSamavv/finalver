@@ -93,4 +93,5 @@ public class Comic {
     public void setDel(boolean del) {
         this.del = del;
     }
+
 }

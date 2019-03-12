@@ -64,6 +64,10 @@ public class ComicServiceImpl implements ComicService {
     @Override
     public boolean del(long cid) {
         int result = comicMapper.delByCid(cid);
+        List<Chapter> chapters = chapterMapper.selectByCid(cid);
+        for(Chapter chapter : chapters){
+            chapterMapper.delByChapterId(chapter.getChapterId());
+        }
         if(result == 1){
             return true;
         }

@@ -19,22 +19,6 @@ export const asyncRouterMap = [
       }
     ]
   },
-  //控件
-  // {
-  //   path: "/widget",
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: "index",
-  //       component: _import("widget/index"),
-  //       name: "widget",
-  //       meta: {
-  //         title: "widget",
-  //         icon: "widgets"
-  //       }
-  //     }
-  //   ]
-  // },
   // 卡片列表
   {
     path: "/panels",
@@ -68,6 +52,25 @@ export const asyncRouterMap = [
           title: "permission",
           icon: "test",
           roles: ["admin"]
+        }
+      }
+    ]
+  },
+  //控件
+  {
+    path: "/widget",
+    component: Layout,
+    meta: {
+      roles: ["admin"]
+    },
+    children: [
+      {
+        path: "index",
+        component: _import("widget/index"),
+        name: "widget",
+        meta: {
+          title: "widget",
+          icon: "widgets"
         }
       }
     ]

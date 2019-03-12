@@ -21,13 +21,6 @@ const userMap = {
     introduction: "i am mori",
     avatar: "https://i.loli.net/2018/08/18/5b7819891bab1.jpg",
     name: "mori"
-  },
-  mori: {
-    roles: ["mori"],
-    token: "mori",
-    introduction: "i am mori",
-    avatar: "https://i.loli.net/2018/08/18/5b7819891bab1.jpg",
-    name: "mori"
   }
 };
 

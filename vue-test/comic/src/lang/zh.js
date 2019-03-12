@@ -6,7 +6,7 @@ export default {
   },
   route: {
     dashboard: "漫画中心",
-    widget: "控件",
+    widget: "漫画审核",
     permission: "漫画管理",
     datatable: "表格",
     components: "组件",

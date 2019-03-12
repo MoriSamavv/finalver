@@ -2,6 +2,7 @@ package com.sys.comic.controller;
 
 import com.sys.comic.entity.Chapter;
 import com.sys.comic.entity.vo.ChapterVO;
+import com.sys.comic.entity.vo.ChapterVerifyVO;
 import com.sys.comic.service.ChapterService;
 import com.sys.comic.view.JsonView;
 import org.apache.commons.logging.Log;
@@ -50,5 +51,19 @@ public class ChapterController {
     private JsonView getChapterVOList(Long cid){
         List<ChapterVO> chapterVOS = chapterService.getChapterVOList(cid);
         return new JsonView(chapterVOS);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getChapterVerifyVOList")
+    private JsonView getChapterVerifyVOList(){
+        List<ChapterVerifyVO> chapterVerifyVOS = chapterService.getChapterVerifyVOList();
+        return new JsonView(chapterVerifyVOS);
+    }
+
+    @ResponseBody
+    @RequestMapping("/setChapterVerify")
+    private JsonView setChapterVerify(Long chapterId, Integer verify){
+        boolean result = chapterService.setVerify(chapterId, verify);
+        return new JsonView(result);
     }
 }

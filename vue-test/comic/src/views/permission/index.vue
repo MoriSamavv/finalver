@@ -95,7 +95,7 @@
     </div>
     <div v-if="!firstpage">
       <div>
-        <i class="el-icon-back" style="font-size: 16px;cursor:pointer; margin-bottom:10px" @click="goback">返回 当前位置</i>
+        <i class="el-icon-back" style="font-size: 16px;cursor:pointer; margin-bottom:10px" @click="goback">返回 当前位置：{{nowTitle}}</i>
       </div>
       <el-button type="primary" @click="dialogVisible2 = true">新建篇章</el-button>
       <el-table
@@ -208,7 +208,8 @@ export default {
         cid: "",
         type: ""
       },
-      uploadType: ""
+      uploadType: "",
+      nowTitle: ""
     };
   },
   mounted() {
@@ -218,6 +219,7 @@ export default {
     handleEdit(row) {
       this.firstpage = !this.firstpage;
       this.nowCid = row.cid;
+      this.nowTitle = row.title;
       console.log(row);
       this.updateTable2();
     },

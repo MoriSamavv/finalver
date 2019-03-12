@@ -51,6 +51,19 @@
               </el-col>
             </el-row>
       </el-card>
+      <el-card shadow="never">
+          <div slot="header">
+            <span class="card-title">话题互动</span>
+          </div>
+            <!-- <el-row :gutter="20"> -->
+              <el-col :span="24" v-for="i in 5" :key="i">
+                <el-card shadow="never" :body-style="{ margin: '20px' }">
+                  ????
+                </el-card>
+              </el-col>
+            <!-- </el-row> -->
+            
+      </el-card>
     </div>
   </div>
   </div>
@@ -129,7 +142,8 @@ export default {
       username: this.$store.state.user.name,
       innerCover: {},
       chapterList: [],
-      nowCid: ""
+      nowCid: "",
+      topicList: []
     };
   },
   watch: {

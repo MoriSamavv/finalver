@@ -189,24 +189,24 @@ export default {
               ? storage.set('loginUser', username)
               : storage.remove('loginUser', username)
 
-            // 开始发送登陆请求
-            // var param = qs.stringify({username,password})
-            // axios.post('http://localhost:8080/loading/login',param).then(function (response) {
-            //   thiz.loading = false
-					  //   var data = response.data;
-					  //   if(data.status == "200"){
-            //     // thiz.success = true;
-            //     console.log(data.data);
-            //     thiz.$message.success("登录成功");
-					  //     thiz.$router.push({ path: '/' });
-					  //   }else{
-					  //     thiz.$message.error(data.message);
-					  //   }
-            // }).catch(function (error) {
-            //   thiz.loading = false
-            //   console.log(error);
-            //   thiz.$message.error("系统异常,请与管理员联系!");
-            // });
+            //开始发送登陆请求
+            var param = qs.stringify({username,password})
+            axios.post('http://localhost:8080/loading/login',param).then(function (response) {
+              thiz.loading = false
+					    var data = response.data;
+					    if(data.status == "200"){
+                // thiz.success = true;
+                console.log(data.data);
+                thiz.$message.success("登录成功");
+					      thiz.$router.push({ path: '/' });
+					    }else{
+					      thiz.$message.error(data.message);
+					    }
+            }).catch(function (error) {
+              thiz.loading = false
+              console.log(error);
+              thiz.$message.error("系统异常,请与管理员联系!");
+            });
 
             
             // async/await 作为一个关键字放到函数前面

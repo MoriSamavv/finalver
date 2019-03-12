@@ -8,9 +8,15 @@
         <result column="section" property="section" jdbcType="VARCHAR" />
         <result column="title" property="title" jdbcType="VARCHAR" />
         <result column="del" property="del" jdbcType="TINYINT" />
+        <result column="posttime" property="posttime" jdbcType="DATE" />
+        <result column="verify" property="verify" jdbcType="INTEGER" />
     </resultMap>
 
     <select id="selectByCid" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select * from chapter where del=0 and verify=1 and cid=#{cid} order by `section`;
+    </select>
+
+    <select id="selectInManagementPage" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select * from chapter where del=0 and cid=#{cid} order by `section`;
     </select>
 
@@ -18,8 +24,8 @@
         <selectKey resultType="java.lang.Integer" keyProperty="chapterId" order="AFTER" >
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into chapter (cid, `section`, title)
-        values (#{cid},#{section},#{title});
+        insert into chapter (cid, `section`, title, `posttime`)
+        values (#{cid},#{section},#{title},#{title});
     </insert>
 
     <update id="delByChapterId" parameterType="java.lang.Long" >
@@ -29,10 +35,20 @@
     </update>
 
     <select id="selectLatest" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        select * from chapter where del=0 and cid=#{cid} order by `section` desc limit 0,1;
+        select * from chapter where del=0 and verify=1 and cid=#{cid} order by `section` desc limit 0,1;
     </select>
 
     <select id="selectByChapterId" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select * from chapter where chapterId=#{chapterId};
     </select>
+
+    <select id="selectForCheck" resultMap="BaseResultMap">
+        select * from chapter where del=0 order by `posttime` desc;
+    </select>
+
+    <update id="checkByChapterId" >
+        update chapter
+        set verify = #{verify}
+        where `chapterId` = #{chapterId};
+    </update>
 </mapper>
