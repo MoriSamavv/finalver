@@ -21,7 +21,7 @@
 			<i class="el-icon-back" style="font-size: 16px;cursor:pointer;" @click="goback">返回</i>
 		</div>
     <div class="profile-container">
-      <el-card shadow="hover" class = "detail">
+      <el-card shadow="never" class = "detail padd">
           <div class="header-avatar">
             <img :src="innerCover.insideurl" />
           </div>
@@ -39,7 +39,7 @@
             </div>
           </div>
       </el-card>
-      <el-card shadow="hover">
+      <el-card shadow="never" class="padd">
           <div slot="header">
             <span class="card-title">正篇章节</span>
           </div>
@@ -51,18 +51,31 @@
               </el-col>
             </el-row>
       </el-card>
-      <el-card shadow="never">
+      <el-card shadow="never" class="commentWrap padd">
           <div slot="header">
-            <span class="card-title">话题互动</span>
+            <div class="commentTitle">
+              <span>话题互动</span>
+            </div>
+            <el-input
+              type="textarea" 
+              :rows="4"
+              :maxlength=150
+              placeholder="请输入内容"
+              v-model="textarea">
+            </el-input>
+            <div class="commentbtn">
+              <el-button type="primary" @click="comment">发送</el-button>
+            </div>
+            <div class="clear"></div>
           </div>
-            <!-- <el-row :gutter="20"> -->
-              <el-col :span="24" v-for="i in 5" :key="i">
-                <el-card shadow="never" :body-style="{ margin: '20px' }">
-                  ????
-                </el-card>
-              </el-col>
-            <!-- </el-row> -->
-            
+          <el-col :span="24" v-for="item in commentList" :key="item.commentid">
+            <el-card shadow="never" :body-style="{ margin: '20px' }">
+              <span class="commentSub commentNickname">{{item.nickname}}</span>
+              <span class="commentSub">{{item.content}}</span>
+              <span class="commentSub commentTime">{{item.posttime}}</span>
+            </el-card>
+        
+          </el-col>
       </el-card>
     </div>
   </div>
@@ -143,7 +156,9 @@ export default {
       innerCover: {},
       chapterList: [],
       nowCid: "",
-      topicList: []
+      topicList: [],
+      textarea: "",
+      commentList: []
     };
   },
   watch: {
@@ -177,6 +192,53 @@ export default {
     clearInterval(this.randomfn);
   },
   methods: {
+    loadComment(){
+      var thiz = this;
+      var params = {
+        cid: this.nowCid
+      }
+      axios.get('http://localhost:8080/comment/getCommentList',{
+  			params: params
+  		}).then(function (response) {
+		    var data = response.data;
+		    if(data.status == "200"){
+          thiz.commentList = data.data;
+          console.log(thiz.commentList);
+		    }else{
+		    	thiz.$message.error(data.message);
+		    }
+		  }).catch(function (error) {
+		    console.log(error);
+		    thiz.$message.error("系统异常!请与管理员联系!");
+      });
+    },
+    comment(){
+      if(this.textarea == ""){
+        this.$message.error("评论不能为空！");
+        return
+      }
+      var thiz = this;
+      var params = {
+        cid: this.nowCid,
+        username: this.username,
+        content: this.textarea
+      }
+      axios.get('http://localhost:8080/comment/createComment',{
+  			params: params
+  		}).then(function (response) {
+		    var data = response.data;
+		    if(data.status == "200"){
+          thiz.$message.success("评论成功！");
+          thiz.textarea = "";
+          thiz.loadComment();
+		    }else{
+		    	thiz.$message.error(data.message);
+		    }
+		  }).catch(function (error) {
+		    console.log(error);
+		    thiz.$message.error("系统异常!请与管理员联系!");
+      });
+    },
     firstLoginnotify() {
       const USERNAME = Cookies.get("username") || "Sakuya";
       if (this.$store.state.app.firstLogin === "yep") {
@@ -218,7 +280,6 @@ export default {
 		    var data = response.data;
 		    if(data.status == "200"){
           thiz.innerCover = data.data;
-          console.log(thiz.innerCover);
 		    }else{
 		    	thiz.$message.error(data.message);
 		    }
@@ -227,6 +288,7 @@ export default {
 		    thiz.$message.error("系统异常!请与管理员联系!");
       });
       this.loadChapterList(cid);
+      this.loadComment();
     },
     goback(){
       this.isFirstPage = true;
@@ -332,10 +394,23 @@ export default {
 <style lang="stylus" scoped>
 @import '../../assets/styl/variables.styl'
 
+.padd
+  margin-bottom 10px
+
 .star:hover
   cursor pointer
   
+.commentTitle
+  margin-bottom 5px
 
+.commentbtn
+  margin-top 5px
+  float right
+.clear
+  clear both
+
+.commentWrap
+  padding-bottom 15px
 
 .chapter
   height 40px
@@ -343,6 +418,13 @@ export default {
   a:hover
     color #e6511e
 
+.commentSub
+  display block
+.commentNickname
+  color #ec5245
+.commentTime
+  float right
+  color #939393
 
 .detail
   margin-top 15px

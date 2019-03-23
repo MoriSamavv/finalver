@@ -8,7 +8,7 @@
         <result column="section" property="section" jdbcType="VARCHAR" />
         <result column="title" property="title" jdbcType="VARCHAR" />
         <result column="del" property="del" jdbcType="TINYINT" />
-        <result column="posttime" property="posttime" jdbcType="DATE" />
+        <result column="posttime" property="posttime" jdbcType="TIMESTAMP" />
         <result column="verify" property="verify" jdbcType="INTEGER" />
     </resultMap>
 

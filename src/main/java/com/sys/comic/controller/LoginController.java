@@ -2,6 +2,7 @@ package com.sys.comic.controller;
 
 import com.sys.comic.entity.User;
 import com.sys.comic.service.UserService;
+import com.sys.comic.util.MD5Util;
 import com.sys.comic.view.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -24,6 +25,10 @@ public class LoginController {
     @ResponseBody
     @RequestMapping("/login")
     private JsonView login(String username, String password){
+        String tem = MD5Util.convertMD5(password);
+        System.out.println("1:"+tem);
+        System.out.println("2:"+MD5Util.convertMD5(tem));
+
         User user = userService.getByUsername(username);
         if(user != null){
             if(password.equals(user.getPassword())){

@@ -8,7 +8,7 @@
         <result column="author" property="author" jdbcType="VARCHAR" />
         <result column="description" property="description" jdbcType="VARCHAR" />
         <result column="latest" property="latest" jdbcType="INTEGER" />
-        <result column="posttime" property="posttime" jdbcType="DATE" />
+        <result column="posttime" property="posttime" jdbcType="TIMESTAMP" />
         <result column="outsideurl" property="outsideurl" jdbcType="VARCHAR" />
         <result column="insideurl" property="insideurl" jdbcType="VARCHAR" />
         <result column="del" property="del" jdbcType="TINYINT" />

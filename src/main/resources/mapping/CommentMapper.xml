@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sys.comic.dao.CommentMapper" >
+
+    <resultMap id="BaseResultMap" type="com.sys.comic.entity.Comment" >
+        <id column="commentid" property="commentid" jdbcType="INTEGER" />
+        <result column="cid" property="cid" jdbcType="INTEGER" />
+        <result column="uid" property="uid" jdbcType="INTEGER" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="posttime" property="posttime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+
+    <insert id="insert" parameterType="com.sys.comic.entity.Comment" >
+        <selectKey resultType="java.lang.Integer" keyProperty="commentid" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into comment (cid, uid, content, posttime)
+        values (#{cid},#{uid},#{content},#{posttime});
+    </insert>
+
+
+    <select id="getByCid" resultMap="BaseResultMap" >
+        select * from comment where cid=#{cid} order by posttime;
+    </select>
+</mapper>
