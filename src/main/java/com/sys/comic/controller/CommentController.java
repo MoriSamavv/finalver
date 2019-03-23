@@ -22,7 +22,6 @@ public class CommentController {
 
     private Log logger = LogFactory.getLog(this.getClass());
 
-
     @Autowired
     private CommentService commentService;
     @Autowired
