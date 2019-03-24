@@ -23,11 +23,7 @@ public class PageServiceImpl implements PageService {
         Page page = new Page();
         page.setChapterId(chapterId);
         page.setPageurl(pageurl);
-        int result = pageMapper.insert(page);
-        if(result == 1){
-            return true;
-        }
-        return false;
+        return pageMapper.insert(page) > 0 ? true : false;
     }
 
     @Override

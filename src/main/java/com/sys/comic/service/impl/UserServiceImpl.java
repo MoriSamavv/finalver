@@ -38,11 +38,6 @@ public class UserServiceImpl implements UserService {
         user.setUsername(username);
         user.setNickname(username);
         user.setPassword(password);
-        int result = userMapper.insert(user);
-        logger.info("result:"+result);
-        if(result == 1){
-            return true;
-        }
-        return false;
+        return userMapper.insert(user) > 0 ? true : false;
     }
 }

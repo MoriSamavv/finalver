@@ -96,11 +96,7 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public boolean setVerify(Long chapterId, Integer verify) {
-        int result = chapterMapper.checkByChapterId(chapterId, verify);
-        if(result == 1){
-            return true;
-        }
-        return false;
+        return chapterMapper.checkByChapterId(chapterId, verify) > 0 ? true : false;
     }
 }
 

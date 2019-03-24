@@ -33,11 +33,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setUid(uid);
         comment.setContent(content);
         comment.setPosttime(new Date());
-        int result = commentMapper.insert(comment);
-        if(result == 1){
-            return true;
-        }
-        return false;
+        return commentMapper.insert(comment) > 0 ? true : false;
     }
 
     @Override

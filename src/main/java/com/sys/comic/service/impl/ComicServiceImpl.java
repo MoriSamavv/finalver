@@ -38,11 +38,7 @@ public class ComicServiceImpl implements ComicService {
         comic.setAuthor(author);
         comic.setDescription(description);
         comic.setPosttime(new Date());
-        int result = comicMapper.insert(comic);
-        if(result == 1){
-            return true;
-        }
-        return false;
+        return comicMapper.insert(comic) > 0 ? true : false;
     }
 
     @Override
